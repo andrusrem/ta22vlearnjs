@@ -29,7 +29,7 @@
 
 <template>
 
-    <div class="container">
+
         <div class="field has-addons m-2">
             <div class="control is-expanded">
                 <input class="input" type="text" v-model="newitem" @keydown.enter="AddItem">
@@ -45,6 +45,5 @@
             <ItemList title="Done Items" :items="doneItems"></ItemList>
             <ItemList title="To Do Items" :items="notDoneItems"></ItemList>
         </div>
-     </div>
     
 </template>
