@@ -15,7 +15,8 @@ module.exports = {
         directory: path.resolve(__dirname, 'public')
     },
     compress: true,
-    port: 1080
+    port: 1080,
+    historyApiFallback: true,
   },
   module: {
     
