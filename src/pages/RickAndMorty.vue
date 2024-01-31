@@ -1,5 +1,5 @@
 <template>
-    <div class="field has-addons">
+    <!-- <div class="field has-addons">
         <p class="control">
             <button :disabled="!info.prev" class="button is-primary" @click="prev">Prev</button>
         </p>
@@ -9,7 +9,7 @@
         <p class="control">
             <button :disabled="!info.next" class="button is-primary" @click="next">Next</button>
         </p>
-    </div>
+    </div> -->
     <div class="columns is-multiline">
         <div v-for="char in characters" class="column is-one-quarter">
             <CharacterCard :character="char"></CharacterCard>
@@ -19,7 +19,7 @@
 <script setup>
     import CharacterCard from '../components/CharacterCard.vue';
     import axios from 'axios';
-    import { ref, reactive } from 'vue';
+    import { ref, reactive, onMounted } from 'vue';
 
     let info = ref({});
     let characters = ref([]);
@@ -30,7 +30,8 @@
         .then(response => {
             console.log(response.data.results);
             info.value = response.data.info;
-            characters.value = response.data.results;
+            // characters.value = response.data.results;
+            characters.value.push(...response.data.results);
         })
         .catch(error => {
             console.log(error);
@@ -42,12 +43,26 @@
         axios.get(url)
             .then(response => {
                 info.value = response.data.info;
-                characters.value = response.data.results;
+                // characters.value = response.data.results;
+                characters.value.push(...response.data.results);
             })
             .catch(error => {
                 console.log(error);
             });
     }
+
+    onMounted(() => {
+        console.log(window);
+
+        document.addEventListener("scroll", () => {
+            if(window.scrollY + window.innerHeight > document.body.clientHeight - 200)
+            {
+                console.log('bottom');
+                next();
+            }
+
+        });
+    });     
     
     function prev() 
     {
@@ -61,34 +76,34 @@
         page.value++;
     }
 
-    function getPage(value) 
-    {
-        getCharacters(`https://rickandmortyapi.com/api/character?page=${value}`);
-        page.value = value;
-    }
+    // function getPage(value) 
+    // {
+    //     getCharacters(`https://rickandmortyapi.com/api/character?page=${value}`);
+    //     page.value = value;
+    // }
 
-    function generatePagination(current, total) 
-    {
-        let pages = [];
+    // function generatePagination(current, total) 
+    // {
+    //     let pages = [];
 
-        for (let i = 1; i <= 3; i++)
-        {
-            pages[i] = i;
-        }
-        if(current > 2 && current < 41)
-        {
-            pages.push('...');
-            for (let i = current - 1; i <= current + 1; i++)
-            {
-                pages[i] = i;
-            }
-        }
-        pages.push('...');
-        for (let i = total - 2; i <= total; i++)
-        {
-            pages[i] = i;
-        }
-        return pages.filter(val => val);
-    }
+    //     for (let i = 1; i <= 3; i++)
+    //     {
+    //         pages[i] = i;
+    //     }
+    //     if(current > 2 && current < 41)
+    //     {
+    //         pages.push('...');
+    //         for (let i = current - 1; i <= current + 1; i++)
+    //         {
+    //             pages[i] = i;
+    //         }
+    //     }
+    //     pages.push('...');
+    //     for (let i = total - 2; i <= total; i++)
+    //     {
+    //         pages[i] = i;
+    //     }
+    //     return pages.filter(val => val);
+    // }
     
 </script>
