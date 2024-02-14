@@ -1,4 +1,8 @@
 <template>
+   
+<div v-if="name">
+
+
     <div class="field has-addons">
         <div class="control is-expanded">
             <input class="input" type="text" placeholder="Write" v-model="msg">
@@ -10,15 +14,42 @@
         </div>
     </div>
 
-    <span class="tag is-info is-light is-large" v-for="message in messages">{{ message }}</span>
+    <p v-for="message in messages" class="mt-2">
+    <div class="notification is-link is-light is-large inline-block p-3">
+        <p class="has-text-dark">
+            {{ messages.name }}
+        </p>
+        {{ messages.name }}
+
+    </div>
+    </p>
+</div>
+<div v-if="!name">
+
+
+<div class="field has-addons">
+    <div class="control is-expanded">
+        <input class="input" type="text" placeholder="Your Name" v-model="inputName">
+    </div>
+    <div class="control">
+        <a class="button is-info" @click="join()">
+            Join
+        </a>
+    </div>
+</div>
+
+</div>
 </template>
 <script setup>
 import { ref } from 'vue';
-
-let messages = ref([]);
+let inputName = ref('');
+let name = ref('');
+let messages = ref([
+    {name:"dedf", message:"vghjkmnbgh"}
+]);
 let msg = ref('');
 // Create WebSocket connection.
-const socket = new WebSocket("ws://localhost:8080");
+let socket;
 
 // // Connection opened
 // socket.addEventListener("open", (event) => {
@@ -26,18 +57,35 @@ const socket = new WebSocket("ws://localhost:8080");
 // });
 
 // Listen for messages
-socket.addEventListener("message", (event) => {
-    console.log("Message from server ", event.data);
-    messages.value.push(event.data);
-});
 
-function send()
-{
-    if(msg.value.trim() != '')
-    {
+
+function send() {
+    if (msg.value.trim() != '') {
         socket.send(msg.value);
-        
+        messages.message.value = msg.value;
+
     }
     msg.value = '';
+
+    socket.addEventListener("message", (event) => {
+    console.log("Message from server ", event.data);
+    JSON.parse(event.data);
+});
+}
+
+function join()
+{
+    name.value = inputName.value;
+
+    socket = new WebSocket("ws://localhost:8080");
+
+    socket.addEventListener("message", (event) => {
+    console.log("Message from server ", event.data);
+    JSON.parse(event.data);});
 }
 </script>
+<style>
+.inline-block {
+    display: inline-block;
+}
+</style>
