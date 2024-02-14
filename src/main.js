@@ -8,6 +8,7 @@ import Modals from './pages/Modals.vue';
 import ChuckNorris from './pages/ChuckNorris.vue';
 import RickAndMorty from './pages/RickAndMorty.vue';
 import LeafletMaps from './pages/LeafletMaps.vue';
+import Websocket from './pages/Websocket.vue';
 
 
 const routes = [
@@ -16,6 +17,7 @@ const routes = [
     { path: '/chuck', component: ChuckNorris, name: "Chuck Norris" },
     { path: '/rick', component: RickAndMorty, name: "Rick and Morty" },
     { path: '/leaflet', component: LeafletMaps, name: "Leaflet Maps" },
+    { path: '/websocket', component: Websocket, name: "WebSocket" },
 ];
 
 const router = createRouter({
