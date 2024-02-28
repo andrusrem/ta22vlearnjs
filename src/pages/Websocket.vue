@@ -17,9 +17,9 @@
     <p v-for="message in messages" class="mt-2">
     <div class="notification is-link is-light is-large inline-block p-3">
         <p class="has-text-dark">
-            {{ messages.name }}
+            {{ message.name }}
         </p>
-        {{ messages.name }}
+        {{ message.message }}
 
     </div>
     </p>
@@ -61,8 +61,8 @@ let socket;
 
 function send() {
     if (msg.value.trim() != '') {
-        socket.send(msg.value);
-        messages.message.value = msg.value;
+        socket.send(JSON.stringify({name: name.value, message: msg.value, isMe: false}));
+        messages.value.push({name: name.value, message: msg.value, isMe: true});
 
     }
     msg.value = '';
