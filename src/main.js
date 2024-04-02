@@ -9,6 +9,7 @@ import ChuckNorris from './pages/ChuckNorris.vue';
 import RickAndMorty from './pages/RickAndMorty.vue';
 import LeafletMaps from './pages/LeafletMaps.vue';
 import Websocket from './pages/Websocket.vue';
+import Comics from './pages/Comics.vue';
 
 
 const routes = [
@@ -18,6 +19,7 @@ const routes = [
     { path: '/rick', component: RickAndMorty, name: "Rick and Morty" },
     { path: '/leaflet', component: LeafletMaps, name: "Leaflet Maps" },
     { path: '/websocket', component: Websocket, name: "WebSocket" },
+    { path: '/comics', component: Comics, name: "Comics" },
 ];
 
 const router = createRouter({
